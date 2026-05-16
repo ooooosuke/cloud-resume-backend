@@ -1,13 +1,15 @@
-# main.tf
-
-# AWS Provider 設定 
+# ==========================================
+# AWS Provider 設定
+# ==========================================
 provider "aws" {
   region = var.region
 }
 
+# ==========================================
 # 1. S3バケットの作成
+# ==========================================
 resource "aws_s3_bucket" "resume_bucket" {
-  bucket = "furuta-resume-prod-2026-unique" 
+  bucket = "${var.project_name}-s3-${var.env}-resume-bucket-furuta" 
 }
 
 # 2. 静的サイトの設定 (index.htmlをルートに)
@@ -18,9 +20,11 @@ resource "aws_s3_bucket_website_configuration" "resume_config" {
   }
 }
 
-# 3. CloudFront OAC (Origin Access Control)
+# ==========================================
+# 3. CloudFront OAC
+# ==========================================
 resource "aws_cloudfront_origin_access_control" "oac" {
-  name                              = "s3-oac"
+  name                              = "${var.project_name}-oac-${var.env}"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
@@ -85,7 +89,9 @@ resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
   })
 }
 
-#Terraform 状態管理用バケット
+# ==========================================
+# Terraform 状態管理用バケット
+# ==========================================
 terraform {
   backend "s3" {
     bucket = "crc-s3-pred-tfstate-furuta" 
