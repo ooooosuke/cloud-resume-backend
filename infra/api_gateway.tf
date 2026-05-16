@@ -33,8 +33,15 @@ module "cors" {
   api_resource_id = aws_api_gateway_resource.root.id
 }
 
+# デプロイ（APIのビルド）
 resource "aws_api_gateway_deployment" "deployment" {
-  depends_on = [aws_api_gateway_integration.lambda_integration]
+  depends_on  = [aws_api_gateway_integration.lambda_integration]
   rest_api_id = aws_api_gateway_rest_api.visitor_api.id
-  stage_name  = "prod"
+}
+
+# ステージ（URLの作成）分離
+resource "aws_api_gateway_stage" "stage" {
+  deployment_id = aws_api_gateway_deployment.deployment.id
+  rest_api_id   = aws_api_gateway_rest_api.visitor_api.id
+  stage_name    = "prod"
 }
