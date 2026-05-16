@@ -1,5 +1,10 @@
 # main.tf
 
+# AWS Provider 設定 
+provider "aws" {
+  region = var.region
+}
+
 # 1. S3バケットの作成
 resource "aws_s3_bucket" "resume_bucket" {
   bucket = "furuta-resume-prod-2026-unique" 
