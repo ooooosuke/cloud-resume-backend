@@ -83,8 +83,8 @@ resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
 #Terraform 状態管理用バケット
 terraform {
   backend "s3" {
-    bucket = "crc-s3-pred-tfstate-ousuke123" # ←今作った（あるいは既にある）バケット名
-    key    = "backend/terraform.tfstate"    # S3内での保存パス（このままでOK）
+    bucket = "crc-s3-pred-tfstate-furuta" 
+    key    = "backend/terraform.tfstate" 
     region = "ap-northeast-1"
   }
 }
