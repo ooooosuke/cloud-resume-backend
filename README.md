@@ -1,24 +1,24 @@
-\# Cloud Resume Challenge - Backend (Visitor Counter API)
+# Cloud Resume Challenge - Backend (Visitor Counter API)
 
 
 
-このリポジトリは、\[Cloud Resume Challenge](https://cloudresumechallenge.dev/) のバックエンドインフラおよび API ロジックを管理するためのものです。
+このリポジトリは、[Cloud Resume Challenge](https://cloudresumechallenge.dev/) のバックエンドインフラおよび API ロジックを管理するためのものです。
 
-Terraform を使用した \*\*Infrastructure as Code (IaC)\*\* と、GitHub Actions による \*\*CI/CD パイプライン\*\* を備えたサーバーレスアーキテクチャで構成されています。
-
-
-
-\## 🏗️ Architecture
+Terraform を使用したInfrastructure as Code(IaC)と、GitHub Actions による CI/CD パイプライン を備えたサーバーレスアーキテクチャで構成されています。
 
 
 
-1\.  \*\*API Gateway\*\*: ブラウザからの HTTPS POST リクエストを受信。
+## 🏗️ Architecture
 
-2\.  \*\*AWS Lambda (Python)\*\*: DynamoDB の値をインクリメントし、現在の訪問者数を返却。
 
-3\.  \*\*Amazon DynamoDB\*\*: 訪問者数をアトミックに保存・管理。
 
-4\.  \*\*GitHub Actions\*\*: コードのプッシュをトリガーに、テスト・インフラ構築・デプロイを自動実行。
+1.  API Gateway: ブラウザからの HTTPS POST リクエストを受信。
+
+2.  AWS Lambda (Python): DynamoDB の値をインクリメントし、現在の訪問者数を返却。
+
+3.  Amazon DynamoDB: 訪問者数をアトミックに保存・管理。
+
+4.  GitHub Actions: コードのプッシュをトリガーに、テスト・インフラ構築・デプロイを自動実行。
 
 
 
@@ -26,7 +26,7 @@ Terraform を使用した \*\*Infrastructure as Code (IaC)\*\* と、GitHub Acti
 
 
 
-\## 📂 Directory Structure
+## 📂 Directory Structure
 
 
 
@@ -68,7 +68,7 @@ cloud-resume-backend/
 
 
 
-\## 🛠️ Technology Stack
+## 🛠️ Technology Stack
 
 Cloud: AWS (ap-northeast-1)
 
@@ -82,15 +82,15 @@ Testing: Pytest / Requests
 
 
 
-\## 🚀 Getting Started
+## 🚀 Getting Started
 
-1\. Prerequisites
+1. Prerequisites
 
 Terraform の状態管理（tfstate）用 S3 バケットが AWS 上に作成されていること。
 
 GitHub Actions 用の IAM ロール (OIDC) が作成され、適切な権限が付与されていること。
 
-2\. GitHub Secrets の設定
+2. GitHub Secrets の設定
 
 リポジトリの Settings > Secrets and variables > Actions に以下のシークレットを登録してください。
 
@@ -120,7 +120,7 @@ terraform apply
 
 
 
-\## 🔄 CI/CD Pipeline
+## 🔄 CI/CD Pipeline
 
 main ブランチへのプッシュをトリガーに、以下のジョブが自動実行されます。
 
@@ -136,7 +136,7 @@ Smoke Test: デプロイされた API が正しく 200 OK を返し、カウン�
 
 
 
-\## 🛡️ Security \& Best Practices
+## 🛡️ Security \& Best Practices
 
 OIDC Authentication: 長期的な AWS アクセスキーを排除し、GitHub OIDC による一時的な認証情報を採用。
 
@@ -146,13 +146,17 @@ CORS Configuration: ブラウザからのクロスオリジンリソース共有
 
 
 
-\## ✍️ Author
+## ✍️ Author
 
 Ousuke Furuta
 
 Infrastructure Engineer / AWS Certified Solutions Architect – Associate
 
-\[GitHub Profile](https://github.com/ooooosuke)
+[GitHub Profile](https://github.com/ooooosuke)
+
+## References
+
+Cloud Resume Challenge Official Website - https://cloudresumechallenge.dev/
 
 
 
