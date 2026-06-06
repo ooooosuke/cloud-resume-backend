@@ -22,10 +22,6 @@ Terraform を使用したInfrastructure as Code(IaC)と、GitHub Actions によ�
 
 
 
-\---
-
-
-
 ## 📂 Directory Structure
 
 
@@ -35,33 +31,19 @@ Terraform を使用したInfrastructure as Code(IaC)と、GitHub Actions によ�
 cloud-resume-backend/
 
 ├── .github/workflows/
-
 │   └── backend-ci.yml      # テスト実行 \& Terraform自動デプロイ
-
 ├── infra/                  # Terraform (IaC) 構成ファイル
-
 │   ├── main.tf             # AWSプロバイダ、S3バックエンド(tfstate)定義
-
 │   ├── variables.tf        # 変数定義 (region, env, project\_name)
-
 │   ├── dynamodb.tf         # DynamoDBテーブル定義
-
 │   ├── lambda.tf           # Lambda関数、IAMロール、権限定義
-
 │   ├── api\_gateway.tf      # API Gateway (CORS設定含む)
-
 │   └── outputs.tf          # APIエンドポイントの出力
-
 ├── lambda/                 # Lambdaソースコード
-
 │   └── lambda\_function.py  # 訪問者数カウントロジック (Python)
-
 ├── tests/                  # 自動テスト関連
-
 │   ├── test\_api.py         # APIスモークテスト
-
 │   └── requirements.txt    # テスト用依存ライブラリ
-
 └── README.md               # 本ファイル
 
 ```
@@ -145,6 +127,22 @@ Minimal Privilege: Lambda の IAM ロールには、特定の DynamoDB テーブ
 CORS Configuration: ブラウザからのクロスオリジンリソース共有を適切に設定。
 
 
+## 📊 New RelicによるAWS監視
+
+ 追加作成済のメトリクス
+- API Gateway の総リクエスト数（カウントアップの可視化）
+SQL
+> SELECT sum(`aws.apigateway.Count`) FROM Metric TIMESERIES
+
+
+- Lambda の平均実行時間（レイテンシーの監視）
+SQL
+> SELECT average(`aws.lambda.Duration`) FROM Metric TIMESERIES
+
+
+- Lambda のエラー発生数（健全性の証明）
+SQL
+> SELECT sum(`aws.lambda.Errors`) FROM Metric TIMESERIES
 
 ## ✍️ Author
 
