@@ -117,6 +117,7 @@ CORS Configuration: ブラウザからのクロスオリジンリソース共有
 
 
 ## 📊 New RelicによるAWS監視
+![監視写真](./Cloud-Resume-NOC-Dashboard.jpg)
 
  追加作成済のメトリクス
 - API Gateway の総リクエスト数（カウントアップの可視化）
