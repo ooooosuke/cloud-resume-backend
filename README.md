@@ -1,16 +1,12 @@
 # Cloud Resume Challenge - Backend (Visitor Counter API)
 
 
-
 このリポジトリは、[Cloud Resume Challenge](https://cloudresumechallenge.dev/) のバックエンドインフラおよび API ロジックを管理するためのものです。
 
 Terraform を使用したInfrastructure as Code(IaC)と、GitHub Actions による CI/CD パイプライン を備えたサーバーレスアーキテクチャで構成されています。
 
 
-
 ## 🏗️ Architecture
-
-
 
 1.  API Gateway: ブラウザからの HTTPS POST リクエストを受信。
 
@@ -23,7 +19,6 @@ Terraform を使用したInfrastructure as Code(IaC)と、GitHub Actions によ�
 
 
 ## 📂 Directory Structure
-
 
 
 ```text
@@ -66,13 +61,13 @@ Testing: Pytest / Requests
 
 ## 🚀 Getting Started
 
-1. Prerequisites
+### 1. Prerequisites
 
 Terraform の状態管理（tfstate）用 S3 バケットが AWS 上に作成されていること。
 
 GitHub Actions 用の IAM ロール (OIDC) が作成され、適切な権限が付与されていること。
 
-2. GitHub Secrets の設定
+### 2. GitHub Secrets の設定
 
 リポジトリの Settings > Secrets and variables > Actions に以下のシークレットを登録してください。
 
@@ -80,27 +75,21 @@ Secret Name
 
 Description
 
-AWS\_IAM\_ROLE\_ARN
+AWS_IAM_ROLE_ARN
 
 GitHub Actions が使用する IAM ロールの ARN
 
-3\. Local Deployment (Manual)
+### 3. Local Deployment (Manual)
 
 ローカルから手動でデプロイする場合は以下を実行します。
 
 Bash
-
+```text
 cd infra
-
 terraform init
-
 terraform plan
-
 terraform apply
-
-
-
-
+```
 
 ## 🔄 CI/CD Pipeline
 
@@ -146,13 +135,10 @@ SQL
 
 ## ✍️ Author
 
-Ousuke Furuta
+- Ousuke Furuta
+- Infrastructure Engineer
 
-Infrastructure Engineer / AWS Certified Solutions Architect – Associate
-
-[GitHub Profile](https://github.com/ooooosuke)
-
-## References
+## 📚 References
 
 Cloud Resume Challenge Official Website - https://cloudresumechallenge.dev/
 
