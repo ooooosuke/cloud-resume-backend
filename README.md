@@ -1,7 +1,7 @@
 # Cloud Resume Challenge - Backend (Visitor Counter API)
 
 
-このリポジトリは、[Cloud Resume Challenge](https://cloudresumechallenge.dev/) のバックエンドインフラおよび API ロジックを管理するためのものです。
+このリポジトリは、[Cloud Resume Challenge](https://github.com/ooooosuke/cloud-resume-challenge) のバックエンドインフラおよび API ロジックを管理するためのものです。
 
 Terraform を使用したInfrastructure as Code(IaC)と、GitHub Actions による CI/CD パイプライン を備えたサーバーレスアーキテクチャで構成されています。
 
