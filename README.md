@@ -109,15 +109,24 @@ CORS Configuration: ブラウザからのクロスオリジンリソース共有
 
 
 ## 📊 New RelicによるAWS監視
-API Gateway/Lambda → CloudWatch → Firehose → New Relic
+**API Gateway/Lambda → CloudWatch → Firehose → New Relic**
 
-Data Firehose 設定
-Data Firehose から New Relic へデータを正常に配送するため、以下の通り認証キーおよびカスタムパラメータを設定。
+1.生成 (API Gateway/Lambda → CloudWatch)
+* **役割**: ユーザーがレジュメにアクセスしてAPIが叩かれた際、実行ログやパフォーマンス（処理時間・エラー率など）がCloudWatch Metricsに自動的に書き込まれるフェーズ。
+* **設定**: 基本的に自動生成。コスト最適化のため、不要なログ出力やリソースの精査を行う箇所。
 
-| 設定項目 | 属性 | 入力するキー (Key) | 入力する値 (Value) | 役割 / 備考 |
+2.ストリーム (CloudWatch → Firehose)
+* **役割**: CloudWatchに溜まったメトリクスを、リアルタイムに次のFirehoseへ押し出す（Pushする）パイプライン。
+* **設定**: CloudWatchの `Metric Streams` で設定。コスト最適化のため、送信対象を `AWS/ApiGateway` と `AWS/Lambda` のみに絞り込むフィルターを設定。
+
+3.送信 (Firehose → New Relic)
+* **役割**: 受け取ったメトリクスデータを、外部のNew Relicのダッシュボードへ暗号化して流し込む最終配送フェーズ。
+* **設定**: Firehose側に以下の通り認証キーとカスタムパラメータを設定。
+
+| 設定項目 | 属性 | Key | Value | 役割 / 備考 |
 | :--- | :--- | :--- | :--- | :--- |
-| Access key | AWS標準の認証枠 | 設定なし | `NRAL-********************************` <br>*(New Relicの INGEST - LICENSE キー)* |データを送信する先の外部サービス（New RelicやDatadogなど）のパスワードやAPIキーを、AWSの標準機能として安全に格納する場所　|
-| Parameters | New Relic専用ヘッダー | `X-License-Key` | `NRAL-********************************` <br>*(上記と同じ INGEST - LICENSE キー)* |送信先であるNew Relic側が指定している「データの送り状（ヘッダー）」の名前|
+| Access key | AWS標準の認証枠 | 設定なし | `NRAL-******` <br>*(New Relicの INGEST - LICENSE キー)* |データを送信する先の外部サービス（New RelicやDatadogなど）のパスワードやAPIキーを、AWSの標準機能として安全に格納する場所　|
+| Parameters | New Relic専用ヘッダー | `X-License-Key` | `NRAL-******` <br>*(上記と同じ INGEST - LICENSE キー)* |送信先であるNew Relic側が指定している「データの送り状（ヘッダー）」の名前|
 
 
 ![監視写真](./Cloud-Resume-NOC-Dashboard.jpg)
@@ -136,6 +145,10 @@ SQL
 - Lambda のエラー発生数（健全性の証明）
 SQL
 > SELECT sum(`aws.lambda.Errors`) FROM Metric TIMESERIES
+
+[^1]: 障害時切り分け　APIGWのREST API（POSTメソッド）に空のJSONデータを送信し、結果を取得するコマンド
+> Invoke-RestMethod -Uri "https://xxxx.execute-api.ap-northeast-1.amazonaws.com/prod/getcount" -Method Post -ContentType "application/json" -Body '{}'
+
 
 ## ✍️ Author
 
