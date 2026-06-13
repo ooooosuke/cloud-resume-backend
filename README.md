@@ -69,15 +69,7 @@ GitHub Actions 用の IAM ロール (OIDC) が作成され、適切な権限が�
 
 ### 2. GitHub Secrets の設定
 
-リポジトリの Settings > Secrets and variables > Actions に以下のシークレットを登録してください。
-
-Secret Name
-
-Description
-
-AWS_IAM_ROLE_ARN
-
-GitHub Actions が使用する IAM ロールの ARN
+リポジトリの Settings > Secrets and variables > Actions に以下のシークレットを登録
 
 ### 3. Local Deployment (Manual)
 
@@ -117,6 +109,17 @@ CORS Configuration: ブラウザからのクロスオリジンリソース共有
 
 
 ## 📊 New RelicによるAWS監視
+API Gateway/Lambda → CloudWatch → Firehose → New Relic
+
+Data Firehose 設定
+Data Firehose から New Relic へデータを正常に配送するため、以下の通り認証キーおよびカスタムパラメータを設定。
+
+| 設定項目 | 属性 | 入力するキー (Key) | 入力する値 (Value) | 役割 / 備考 |
+| :--- | :--- | :--- | :--- | :--- |
+| Access key | AWS標準の認証枠 | 設定なし | `NRAL-********************************` <br>*(New Relicの INGEST - LICENSE キー)* |データを送信する先の外部サービス（New RelicやDatadogなど）のパスワードやAPIキーを、AWSの標準機能として安全に格納する場所　|
+| Parameters | New Relic専用ヘッダー | `X-License-Key` | `NRAL-********************************` <br>*(上記と同じ INGEST - LICENSE キー)* |送信先であるNew Relic側が指定している「データの送り状（ヘッダー）」の名前|
+
+
 ![監視写真](./Cloud-Resume-NOC-Dashboard.jpg)
 
  追加作成済のメトリクス
